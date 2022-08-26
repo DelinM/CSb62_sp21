@@ -138,9 +138,19 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+
+        /** use two for loops going through the tiles, if it has 0 then return True */
+        int size = b.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Tile exam = b.tile(i,j);
+                if (exam == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
-
     /**
      * Returns true if any tile is equal to the maximum valid value.
      * Maximum valid value is given by MAX_PIECE. Note that
@@ -148,6 +158,17 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Tile exam = b.tile(i,j);
+                if (exam != null) {
+                    if (exam.value() == MAX_PIECE) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +180,30 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+
+        int [] c_move = {0,1,0,-1};
+        int [] r_move = {1,0,-1,0};
+
+        int size = b.size();
+        for (int col = 0; col < size; col ++) {
+            for (int row = 0; row < size; row ++) {
+                int value = b.tile(col, row).value();
+                for (int move = 0; move < c_move.length; move++) {
+                    int temp_row = row + r_move[move];
+                    int temp_col = col + c_move[move];
+
+                    if (temp_col > 0 && temp_col < size && temp_row > 0 && temp_row < size) {
+                        int temp_value = b.tile(temp_col,temp_row).value();
+                        if (temp_value == value) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
