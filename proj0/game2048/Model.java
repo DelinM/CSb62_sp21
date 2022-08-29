@@ -107,7 +107,35 @@ public class Model extends Observable {
      *    and the trailing tile does not.
      * */
 
+    public void changeRow(int c, int row, int size, int[] modifier) {
+        boolean changed;
+        if (row < 0 || row >= size - 1) {
+            return;
+        }
+        for (int tempR = row + 1; tempR < size; tempR++) {
+            Tile t = board.tile(c,row);
+            if (modifier[tempR] == 1) {
+                continue;
+            }
+            if (board.tile(c,tempR) == null) {
+                board.move(c,tempR,t);
+                changed = true;
+            } else {
+                int temp_value = board.tile(c,tempR).value();
+                int t_value = t.value();
 
+                if (temp_value == t_value) {
+                    board.move(c,tempR,t);
+                    changed = true;
+                    modifier[tempR] = 1;
+                } else {
+                    continue;
+                }
+            }
+        }
+        changeRow(c, row - 1, size, modifier);
+
+    }
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
@@ -116,57 +144,13 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
-        // code only testing column  0 for now.
         int size = board.size();
 
         for (int c = 0; c < size; c++) {
             int[] modifier = {0, 0, 0, 0};
-
-            for (int r = size - 1; r >= 0; r -= 1) {
-                Tile t = board.tile(c,r);
-                int tempR = r + 1;
-                if (t != null) {
-                    for (; tempR > r && tempR < size; tempR += 1) {
-                        Tile tempT = board.tile(c, tempR);
-                        if (modifier[tempR] == 1) {
-                            continue;
-                        } else if (tempT == null) {
-                            // recursion potentional
-                            for (int tempRr = tempR + 1; tempRr < size ;tempRr += 1) {
-                                boolean trigger = false;
-                                Tile tempTt = board.tile(c,tempRr);
-                                if (tempTt != null) {
-                                    if (modifier[tempR] == 1) {
-                                        continue;
-                                    } else {
-                                        if (tempTt.value() == t.value()) {
-                                            modifier[tempRr] = 1;
-                                            board.move(c, tempRr, t);
-                                            trigger = true;
-                                            changed = true;
-                                            continue;
-                                        } else {
-                                            continue;
-                                        }
-                                    }
-
-                                }
-                            }
-
-                        } else {
-                            if (tempT.value() == t.value()) {
-                                board.move(c, tempR, t);
-                                changed = true;
-                                modifier[tempR] = 1;
-                            } else {
-                                continue;
-                            }
-                        }
-                    }
-                }
-            }
+            int r = 3;
+            changeRow(c, 3, size, modifier);
         }
-
         return changed;
     }
 
