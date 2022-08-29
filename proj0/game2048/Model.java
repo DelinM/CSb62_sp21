@@ -117,34 +117,56 @@ public class Model extends Observable {
         // changed local variable to true.
 
         // code only testing column  0 for now.
+        int size = board.size();
 
-        int c = 0;
-        for (int r = board.size() - 1; r >= 0; r += 1){
-            Tile t = board.tile(c,r);
-            // value of tile is null, skip, no action required.
-            
+        for (int c = 0; c < size; c++) {
+            int[] modifier = {0, 0, 0, 0};
 
-        }
-
-
-        for (int c = 0; c < board.size(); c += 1) {
-            for (int r = 0; r < board.size(); r +=1) {
+            for (int r = size - 1; r >= 0; r -= 1) {
                 Tile t = board.tile(c,r);
-                // note 1: start from row 2 if empty, then move up
-                // if not empty then compare value. if value match than combine,
-                // if not empty and compare value, if value does not match than stay.
+                int tempR = r + 1;
+                if (t != null) {
+                    for (; tempR > r && tempR < size; tempR += 1) {
+                        Tile tempT = board.tile(c, tempR);
+                        if (modifier[tempR] == 1) {
+                            continue;
+                        } else if (tempT == null) {
+                            // recursion potentional
+                            for (int tempRr = tempR + 1; tempRr < size ;tempRr += 1) {
+                                boolean trigger = false;
+                                Tile tempTt = board.tile(c,tempRr);
+                                if (tempTt != null) {
+                                    if (modifier[tempR] == 1) {
+                                        continue;
+                                    } else {
+                                        if (tempTt.value() == t.value()) {
+                                            modifier[tempRr] = 1;
+                                            board.move(c, tempRr, t);
+                                            trigger = true;
+                                            changed = true;
+                                            continue;
+                                        } else {
+                                            continue;
+                                        }
+                                    }
 
-                if (board.tile(c,r) != null) {
-                    board.move(c,2,t);
-                    changed = true;
+                                }
+                            }
+
+                        } else {
+                            if (tempT.value() == t.value()) {
+                                board.move(c, tempR, t);
+                                changed = true;
+                                modifier[tempR] = 1;
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        checkGameOver();
-        if (changed) {
-            setChanged();
-        }
         return changed;
     }
 
