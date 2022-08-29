@@ -112,10 +112,10 @@ public class Model extends Observable {
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
-        // changed local variable to true.
+
+        board.setViewingPerspective(side);
 
         int size = board.size();
-        int score = Model.score();
 
         for (int c = 0; c < size; c++) {
             int[] modifier = {0, 0, 0, 0};
@@ -152,6 +152,8 @@ public class Model extends Observable {
                 }
             }
         }
+        board.setViewingPerspective(Side.NORTH);
+
         return changed;
     }
 
