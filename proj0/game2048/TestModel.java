@@ -1020,8 +1020,7 @@ public class TestModel extends TestUtils {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         }, totalScore, 0, prevBoard, currMove);
-        toAdd = Tile.create(4, 0, 3);
-        model.addTile(toAdd);
+        toAdd = Tile.create(4, 0, 3);        model.addTile(toAdd);
 
         prevBoard = model.toString();
         currMove = Side.SOUTH;

@@ -141,7 +141,12 @@ public class Model extends Observable {
                                 board.move(c, tempR, t);
                                 t = board.tile(c,tempR);
                                 changed = true;
-                                modifier[tempR] = 1;
+                                int r = tempR;
+                                while (r < size) {
+                                    modifier[r] = 1;
+                                    r++;
+                                }
+//                                modifier[tempR] = 1;
                                 value = board.tile(c,tempR).value();
                                 score = score + value;
                             } else{
