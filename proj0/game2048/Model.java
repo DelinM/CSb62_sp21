@@ -106,36 +106,6 @@ public class Model extends Observable {
      *    value, then the leading two tiles in the direction of motion merge,
      *    and the trailing tile does not.
      * */
-
-    public void changeRow(int c, int row, int size, int[] modifier) {
-        boolean changed;
-        if (row < 0 || row >= size - 1) {
-            return;
-        }
-        for (int tempR = row + 1; tempR < size; tempR++) {
-            Tile t = board.tile(c,row);
-            if (modifier[tempR] == 1) {
-                continue;
-            }
-            if (board.tile(c,tempR) == null) {
-                board.move(c,tempR,t);
-                changed = true;
-            } else {
-                int temp_value = board.tile(c,tempR).value();
-                int t_value = t.value();
-
-                if (temp_value == t_value) {
-                    board.move(c,tempR,t);
-                    changed = true;
-                    modifier[tempR] = 1;
-                } else {
-                    continue;
-                }
-            }
-        }
-        changeRow(c, row - 1, size, modifier);
-
-    }
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
@@ -145,11 +115,42 @@ public class Model extends Observable {
         // changed local variable to true.
 
         int size = board.size();
+        int score = Model.score();
 
         for (int c = 0; c < size; c++) {
             int[] modifier = {0, 0, 0, 0};
-            int r = 3;
-            changeRow(c, 3, size, modifier);
+            for (int row = size - 2; row >= 0; row --){
+                Tile t = board.tile(c,row);
+                if (t == null) {
+                    continue;
+                } else {
+                    int value = t.value();
+                    for (int tempR = row + 1; tempR < size; tempR++) {
+                        if (modifier[tempR] == 1) {
+                            break;
+                        }
+                        Tile tempT = board.tile(c, tempR);
+                        if (tempT == null) {
+                            board.move(c, tempR, t);
+                            t = board.tile(c,tempR);
+                            changed = true;
+                            value = board.tile(c,tempR).value();
+                        } else {
+                            int temp_value = tempT.value();
+                            if (value == temp_value) {
+                                board.move(c, tempR, t);
+                                t = board.tile(c,tempR);
+                                changed = true;
+                                modifier[tempR] = 1;
+                                value = board.tile(c,tempR).value();
+                                score = score + value;
+                            } else{
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
         }
         return changed;
     }
