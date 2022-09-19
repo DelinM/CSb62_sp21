@@ -22,6 +22,8 @@ public class TimeAList {
     }
 
     public static void timeAListConstruction() {
+        Stopwatch sw = new Stopwatch();
+
         // TODO: YOUR CODE HERE
     }
 }
