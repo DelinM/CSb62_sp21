@@ -29,15 +29,23 @@ public class TimeSLList {
         AList<Integer> opCounts = new AList<>();
 
         SLList<Integer> sllist = new SLList<>();
-        int tick = 1;
+        int tick = 0;
+        int operation = 10000;
 
         for (int i = 0; i < 128000; i ++) {
             sllist.addLast(i);
-            if (i == Math.pow(2, tick)) {
-
+            double checker = Math.pow(2, tick) * 1000;
+            if (i == checker) {
+                Stopwatch sw = new Stopwatch();
+                for (int j = 0; j < operation; j++) {
+                    sllist.getLast();
+                }
+                Ns.addLast(i);
+                times.addLast(sw.elapsedTime());
+                opCounts.addLast(operation);
+                tick++;
             }
         }
-
+        printTimingTable(Ns, times, opCounts);
     }
-
 }
