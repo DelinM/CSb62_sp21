@@ -3,9 +3,9 @@ package deque;
 public class LinkedListDeque<T> {
 
     private class StuffNode {
-        public IntNode prev;
+        public StuffNode prev;
         public T item;
-        public IntNode next;
+        public StuffNode next;
 
         public StuffNode(StuffNode p, T i, StuffNode n) {
             prev = p;
