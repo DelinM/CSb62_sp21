@@ -2,32 +2,34 @@ package deque;
 
 public class LinkedListDeque<T> {
 
-    private class IntNode() {
+    private class StuffNode {
         public IntNode prev;
         public T item;
         public IntNode next;
 
-        public IntNode(IntNode p, T i, IntNode n) {
+        public StuffNode(StuffNode p, T i, StuffNode n) {
             prev = p;
             item = i;
             next = n;
     }
 
-    private IntNode sentinel;
+    private StuffNode first;
     public int size;
     
-    public LinkedListDeque(T item) {
-        
+    public LinkedListDeque(T x) {
+        first = new StuffNode(null, x, null);
         size = 1;
-
     }
 
     
-    public void addFirst(T item) {
+    public void addFirst(T x) {
+        first.prev = new StuffNode(null, x, first)
+        size++;
 
     }
 
-    public void addLast(T item) {
+    public void addLast(T x) {
+        first.next = new StuffNode(first, x, null);
 
     }
 
@@ -60,6 +62,10 @@ public class LinkedListDeque<T> {
     }
 
     public boolean equals(Object o) {
+
+    }
+
+    public static void main(String[] args){
 
     }
 }
