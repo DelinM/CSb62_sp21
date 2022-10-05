@@ -13,36 +13,58 @@ public class LinkedListDeque<T> {
             next = n;
     }
 
-    private StuffNode first;
+    /* first item is at sentinel.next */
+    private StuffNode sentinel;
     public int size;
     
+    /** Creats an empty LLD */
+    public LinkedListDeque() {
+        sentinel = new StuffNode(null, null, null);
+        size = 0;
+    }
+
+    /** Create an LLD with new data */
     public LinkedListDeque(T x) {
-        first = new StuffNode(null, x, null);
+        sentinel = new StuffNode(null, null, null);
+        sentinel.next = new StuffNode(sentinel, x, sentinel);
         size = 1;
     }
 
     
     public void addFirst(T x) {
-        first.prev = new StuffNode(null, x, first)
+        sentinel.next = new StuffNode(sentinel, x, sentinel.next);
+        first.prev = new StuffNode(null, x, first);
         size++;
 
     }
 
     public void addLast(T x) {
-        first.next = new StuffNode(first, x, null);
+        IntNode p = sentinel;
+
+        while (p.next != null) {
+            p = p.next;
+        }
+        p.next = new IntNode(p, x, sentinel);
+        size++;
 
     }
 
     public boolean isEmpty() {
+        if (size = 0){
+            return True;
+        } else {
+            return False;
+        }
 
     }
 
     public int size() {
+        return size;
 
     }
 
     public void printDeque() {
-
+        
     }
 
     public T removeFirst() {
