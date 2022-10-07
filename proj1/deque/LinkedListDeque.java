@@ -23,6 +23,8 @@ public class LinkedListDeque<T> {
      */
     public LinkedListDeque() {
         sentinel = new StuffNode(null, null, null);
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
         size = 0;
     }
 
@@ -45,7 +47,8 @@ public class LinkedListDeque<T> {
 
     /** Add an element at location last */
     public void addLast(T x) {
-        sentinel.prev.next = new StuffNode(sentinel.prev, x, sentinel);
+        sentinel.prev = new StuffNode(sentinel.prev, x, sentinel);
+        sentinel.prev.prev.next = sentinel.prev;
         size++;
     }
 
@@ -83,7 +86,7 @@ public class LinkedListDeque<T> {
     }
 
     public static void main(String[] args) {
-        LinkedListDeque<String> lld1 = new LinkedListDeque<>("something1");
+        LinkedListDeque<String> lld1 = new LinkedListDeque<>();
         lld1.addFirst("something2");
         lld1.addFirst("something3");
         lld1.addFirst("something3");
@@ -91,11 +94,23 @@ public class LinkedListDeque<T> {
         System.out.println("2");
     }
     public T removeLast() {
+        T i = sentinel.next.item;
+        if (sentinel.prev.equals(sentinel.next)) {
+            sentinel = new StuffNode(null, null, null);
+        } else {
+            sentinel.prev = sentinel.prev.prev;
+            sentinel.prev.prev.next = sentinel.prev;
+
+
+            sentinel.next = sentinel.next.next;
+            sentinel.next.next.prev = sentinel;
+        }
+        return i;
 
     }
 
     public T get(int index) {
-
+        return null;
     }
 
 //    public Iterator<T> iterator() {
