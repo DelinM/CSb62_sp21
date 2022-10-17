@@ -1,7 +1,9 @@
 package deque;
 
+import java.util.Iterator;
+
 //package deque;
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Iterable<T> {
     public int size;
     private int nextFirst;
     private int nextLast;
@@ -26,19 +28,18 @@ public class ArrayDeque<T> {
         int tempSize = items.length * 2;
         T[] temp = (T[]) new Object[tempSize];
 
-        for (int i = 0; i < items.length - 1; i++) {
+        for (int i = 0; i < size; i++) {
             T item = items[arrayInd(i)];
             temp[i] = item;
         }
 
         nextFirst = temp.length - 1;
-        nextLast = items.length;
+        nextLast = size;
 
         items = temp;
     }
 
     public void addFirst(T item) {
-        size++;
 
         // update size of the ArrayDeque
         if (increase_Resize()) {
@@ -51,10 +52,10 @@ public class ArrayDeque<T> {
         }
         items[nextFirst] = item;
         nextFirst = nextFirst - 1;
+        size++;
     }
 
     public void addLast(T item) {
-        size++;
 
         // update size of the ArrayDeque
         if (increase_Resize()) {
@@ -67,6 +68,8 @@ public class ArrayDeque<T> {
         }
         items[nextLast] = item;
         nextLast = nextLast + 1;
+        size++;
+
     }
 
     private int arrayInd(int ind) {
@@ -107,13 +110,13 @@ public class ArrayDeque<T> {
     private void deresize() {
         T[] temp = (T[]) new Object[items.length/2];
 
-        for (int i = 0; i < items.length - 1; i++) {
+        for (int i = 0; i < size; i++) {
             T item = items[arrayInd(i)];
             temp[i] = item;
         }
 
         nextFirst = temp.length - 1;
-        nextLast = items.length;
+        nextLast = size + 2;
 
         items = temp;
     }
@@ -121,6 +124,9 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
 
+        if (isEmpty()){
+            return null;
+        }
 
         if (decrease_resize()){
             deresize();
@@ -132,15 +138,16 @@ public class ArrayDeque<T> {
 
         nextFirst = nextFirst + 1;
 
-        if (nextFirst == items.length){
-            nextFirst = 0;
-        }
         size--;
+
         return item;
     }
 
     public T removeLast() {
 
+        if (isEmpty()){
+            return null;
+        }
 
         if (decrease_resize()){
             deresize();
@@ -153,13 +160,29 @@ public class ArrayDeque<T> {
         // update the addLast location
         nextLast = nextLast - 1;
 
-        if(nextLast == -1) {
-            nextLast = items.length - 1;
-        }
         size--;
-        return item;
 
+        return item;
     }
+
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int pos = 0;
+        public boolean hasNext() {
+            return pos < size;
+        }
+
+        public T next() {
+            T returnItem = get(pos);
+            pos += 1;
+            return returnItem;
+        }
+    }
+
+
 
     public T get(int index) {
         int arrayIndex = arrayInd(index);
@@ -167,7 +190,7 @@ public class ArrayDeque<T> {
     }
 
     public static void main(String[] args) {
-        ArrayDeque test = new ArrayDeque();
+        ArrayDeque<Integer> test = new ArrayDeque<>();
         test.addFirst(12);
         test.addFirst(11);
         test.addFirst(10);
@@ -182,21 +205,24 @@ public class ArrayDeque<T> {
         test.addFirst(1);
         test.addFirst(0);
         test.addFirst(-1);
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
+        test.addLast(-2);
 
-
-
-
-
-
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
+        test.removeLast();
         test.printDeque();
+        System.out.println();
+
+        for (int i : test) {
+            System.out.println(i);
+        }
+
     }
 }
