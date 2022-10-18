@@ -3,7 +3,7 @@ package deque;
 import java.util.Iterator;
 
 //package deque;
-public class ArrayDeque<T> implements Iterable<T> {
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public int size;
     private int nextFirst;
     private int nextLast;
@@ -187,6 +187,12 @@ public class ArrayDeque<T> implements Iterable<T> {
     public T get(int index) {
         int arrayIndex = arrayInd(index);
         return items[arrayIndex];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        
+
     }
 
     public static void main(String[] args) {
