@@ -4,16 +4,16 @@ import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
-    public StuffNode sentinel;
-    public int size;
+    private StuffNode sentinel;
+    private int size;
 
     private class StuffNode {
 
-        public StuffNode prev;
-        public T item;
-        public StuffNode next;
+        private StuffNode prev;
+        private T item;
+        private StuffNode next;
 
-        public StuffNode(StuffNode p, T i, StuffNode n) {
+        private StuffNode(StuffNode p, T i, StuffNode n) {
             prev = p;
             item = i;
             next = n;
@@ -59,9 +59,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     public boolean isEmpty() {
         if (size == 0) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public int size() {
@@ -113,22 +112,20 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     public T get(int index) {
 
         /** base condition check*/
-        if (size == 0 || index > size - 1 ) {
+        if (size == 0 || index > size - 1) {
             return null;
         }
 
         /** note that when it comes to size and index, size is always 1 bigger than index*/
         StuffNode p = sentinel;
-        for (int i = 0;i <= index;i++ ) {
+        for (int i = 0; i <= index; i++) {
             p = p.next;
         }
-
         return p.item;
     }
 
-    /** returns an iterator into ME */
     public Iterator<T> iterator() {
-     return new LinkedListIterator();
+        return new LinkedListIterator();
     }
 
     private class LinkedListIterator implements Iterator<T> {
@@ -156,7 +153,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
         return getRecursiveHelp(index, nodeInd + 1, p.next);
     }
-    public T getRecursive(int index){
+    public T getRecursive(int index) {
         StuffNode p = sentinel.next;
         if (index < 0) {
             return null;
@@ -177,7 +174,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
 
-        if(!(o instanceof Deque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
 
