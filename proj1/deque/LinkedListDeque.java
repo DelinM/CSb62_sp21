@@ -30,14 +30,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     }
 
-    /** Create an LLD with new data */
-    public LinkedListDeque(T x) {
-        sentinel = new StuffNode(null, null, null);
-        sentinel.next = new StuffNode(sentinel, x, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
-
     /** Add an element at location one */
     public void addFirst(T x) {
         sentinel.next = new StuffNode(sentinel, x, sentinel.next);
@@ -189,17 +181,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             }
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> something = new LinkedListDeque<>();
-        something.addFirst(5);
-        something.addFirst(5);
-        something.addFirst(15);
-
-        for (int i : something) {
-            System.out.println(i);
-        }
     }
 
 }

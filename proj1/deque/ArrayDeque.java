@@ -1,4 +1,3 @@
-
 package deque;
 
 import java.util.Arrays;
@@ -15,13 +14,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public ArrayDeque() {
         size = 0;
         nextFirst = 3;
-        nextLast = 4;
-    }
-
-    public ArrayDeque(T item) {
-        items[3] = item;
-        size = 1;
-        nextFirst = 2;
         nextLast = 4;
     }
 
@@ -43,17 +35,15 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
     public int size() {
         return size;
     }
 
     public void printDeque() {
-        System.out.println(String.join(" ", Arrays.stream(items).filter(Objects::nonNull).map(T::toString).toArray(String[]::new)));
+        System.out.println(String.join(" ",
+                Arrays.stream(items).
+                        filter(Objects::nonNull).map(T::toString).
+                        toArray(String[]::new)));
     }
 
     public T removeFirst() {
@@ -110,6 +100,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return new ArrayDequeIterator();
     }
 
+    public boolean isEmpty() {
+        if (size == 0) {
+            return true;
+        }
+        return false;
+    }
     @Override
     public boolean equals(Object o) {
         if (o == null) {
