@@ -125,10 +125,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public T removeFirst() {
 
         if (isEmpty()){
-            items = (T[]) new Object[8];
-            size = 0;
-            nextFirst = 4;
-            nextLast = 5;
             return null;
         }
 
@@ -143,17 +139,12 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         nextFirst = nextFirst + 1;
 
         size--;
-
         return item;
     }
 
     public T removeLast() {
 
         if (isEmpty()){
-            items = (T[]) new Object[8];
-            size = 0;
-            nextFirst = 4;
-            nextLast = 5;
             return null;
         }
 
@@ -169,7 +160,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         nextLast = nextLast - 1;
 
         size--;
-
         return item;
     }
 
