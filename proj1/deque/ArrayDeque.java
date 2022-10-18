@@ -125,6 +125,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public T removeFirst() {
 
         if (isEmpty()){
+            new ArrayDeque();
             return null;
         }
 
@@ -146,6 +147,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public T removeLast() {
 
         if (isEmpty()){
+            new ArrayDeque();
             return null;
         }
 
