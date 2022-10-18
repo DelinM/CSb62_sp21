@@ -145,8 +145,53 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     }
 
-    public boolean equals(Object o) {
+    private T getRecursiveHelp(int index, int nodeInd, StuffNode p) {
+        if (p.item == null) {
+            return null;
+        }
 
+        if (nodeInd == index) {
+            return p.item;
+        }
+
+        return getRecursiveHelp(index, nodeInd + 1, p.next);
+    }
+    public T getRecursive(int index){
+        StuffNode p = sentinel.next;
+        if (index < 0) {
+            return null;
+        }
+        int nodeInd = 0;
+
+        return getRecursiveHelp(index, nodeInd, p);
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if(!(o instanceof Deque)) {
+            return false;
+        }
+
+        Deque<T> ol = (Deque<T>) o;
+        if (ol.size() != this.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (!(ol.get(i).equals(this.get(i)))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
