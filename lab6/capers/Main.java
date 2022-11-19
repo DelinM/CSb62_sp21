@@ -1,7 +1,8 @@
 package capers;
 
-import java.io.File;
-import java.util.Arrays;
+import java.io.*;
+import java.io.IOException;
+import java.util.*;
 
 import static capers.Utils.*;
 
@@ -42,6 +43,7 @@ public class Main {
             Utils.exitWithError("Must have at least one argument");
         }
         System.out.println("args: " + Arrays.toString(args));
+        System.out.println(System.getProperty("user.dir"));
 
         CapersRepository.setupPersistence();
         String text;
