@@ -405,7 +405,7 @@ def doTest(test):
         if not keep:
             cleanTempDir(tmpdir)
         else:
-            print(f"\nDirectory state saved in {tmpdir}")
+             print(f"\nDirectory state saved in {tmpdir}")
 
 if __name__ == "__main__":
     show = None
@@ -441,7 +441,7 @@ if __name__ == "__main__":
                 DEBUG = True
                 TIMEOUT = 100000
         if lib_dir is None:
-            lib_dir = join(abspath(environ['REPO_DIR']),
+            lib_dir = join('/Users/delinmu/Documents/GitHub/CSb62_sp21',
                            "library-sp21/javalib")
         else:
             lib_dir = join(abspath(getcwd()), abspath(lib_dir))
